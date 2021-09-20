@@ -3,8 +3,6 @@ import axios from "axios";
 
 import "./App.css";
 
-const API_URL = "https://polimi-classroom-finder.herokuapp.com/";
-
 interface Classroom {
 	classroom: string;
 	hours: number[];
@@ -15,7 +13,7 @@ const App = () => {
 	const [classrooms, setClassrooms] = useState(Array<Classroom>());
 
 	useEffect(() => {
-		axios.get(API_URL).then((res) => setClassrooms(res.data));
+		axios.get(createURL()).then((res) => setClassrooms(res.data));
 	}, []);
 
 	return (
@@ -38,6 +36,16 @@ const App = () => {
 			</div>
 		</>
 	);
+};
+
+const createURL = () => {
+	let url = "https://polimi-classroom-finder.herokuapp.com/";
+
+	const date = new Date();
+
+	url += `?date=${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+
+	return url;
 };
 
 const calculateFreeHours = (classroom: Classroom) => {
