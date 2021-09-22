@@ -6,7 +6,7 @@ Trova aule libere in base al calendario pubblicato a questo [link](https://www7.
 
 - [ ] Aggiungere un date picker
 - [ ] Aggiungere dark mode
-- [ ] Aggiungere schermata caricamento
+- [x] Aggiungere schermata caricamento
 - [ ] Aggiungere cache al backend
 
 ## Bug

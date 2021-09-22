@@ -2,12 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 
 import "./App.css";
-
-interface Classroom {
-	classroom: string;
-	hours: number[];
-	freeHours: number;
-}
+import { createURL, calculateFreeHours } from "./util";
+import { Classroom } from "./util";
 
 const App = () => {
 	const [classrooms, setClassrooms] = useState(Array<Classroom>());
@@ -18,50 +14,34 @@ const App = () => {
 
 	return (
 		<>
-			<div className="main-container">
-				{classrooms.map((classroom, i) => {
-					if (i === 0 || classroom.freeHours !== classrooms[i - 1].freeHours) {
-						// create header + element
-						return (
-							<>
-								{createHeader(classroom.freeHours)}
-								{createElement(classroom)}
-							</>
-						);
-					}
+			{classrooms.length === 0 ? (
+				<div className="loading">
+					<h1>Sto cercando delle aule vuote...</h1>
+					<div className="loading-icon"></div>
+				</div>
+			) : (
+				<div className="main-container">
+					{classrooms.map((classroom, i) => {
+						if (
+							i === 0 ||
+							classroom.freeHours !== classrooms[i - 1].freeHours
+						) {
+							// create header + element
+							return (
+								<>
+									{createHeader(classroom.freeHours)}
+									{createElement(classroom)}
+								</>
+							);
+						}
 
-					// create only element
-					return <>{createElement(classroom)}</>;
-				})}
-			</div>
+						// create only element
+						return <>{createElement(classroom)}</>;
+					})}
+				</div>
+			)}
 		</>
 	);
-};
-
-const createURL = () => {
-	let url = "https://polimi-classroom-finder.herokuapp.com/";
-
-	const date = new Date();
-
-	url += `?date=${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
-
-	return url;
-};
-
-const calculateFreeHours = (classroom: Classroom) => {
-	const freeHours: string[] = [];
-
-	let start = 8;
-
-	classroom.hours.forEach((hours, i) => {
-		if (i % 2 === 0 && hours > 0) {
-			freeHours.push(`${start}:15 - ${start + hours}:15`);
-		}
-
-		start += hours;
-	});
-
-	return freeHours;
 };
 
 const createElement = (classroom: Classroom) => {
