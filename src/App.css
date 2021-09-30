@@ -46,6 +46,13 @@ p {
 	animation: loading 1s linear infinite;
 }
 
+.filters-container {
+	box-sizing: border-box;
+	padding: 1rem;
+	background-color: #ab47bc;
+	color: white;
+}
+
 @keyframes loading {
 	from {
 		transform: rotate(0);

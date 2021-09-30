@@ -4,10 +4,10 @@ export interface Classroom {
 	freeHours: number;
 }
 
-export const createURL = () => {
+export const createURL = (d?: Date) => {
 	let url = "https://polimi-classroom-finder.herokuapp.com/";
 
-	const date = new Date();
+	const date = d ?? new Date();
 
 	url += `?date=${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 

@@ -1,16 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { forwardRef, useEffect, useState } from "react";
 import axios from "axios";
+import DatePicker, { registerLocale } from "react-datepicker";
+import it from "date-fns/locale/it";
 
-import "./App.css";
 import { createURL, calculateFreeHours } from "./util";
 import { Classroom } from "./util";
 
+import "./App.css";
+import "react-datepicker/dist/react-datepicker.css";
+
+registerLocale("it", it);
+
 const App = () => {
 	const [classrooms, setClassrooms] = useState(Array<Classroom>());
+	const [date, setDate] = useState(new Date());
 
 	useEffect(() => {
-		axios.get(createURL()).then((res) => setClassrooms(res.data));
-	}, []);
+		setClassrooms([]);
+		axios.get(createURL(date)).then((res) => setClassrooms(res.data));
+	}, [date]);
+
+	const CustomInput = (
+		{ value, onClick }: React.HTMLProps<HTMLButtonElement>,
+		ref: React.Ref<HTMLButtonElement>
+	) => {
+		return <button onClick={onClick}>{value}</button>;
+	};
 
 	return (
 		<>
@@ -20,25 +35,36 @@ const App = () => {
 					<div className="loading-icon"></div>
 				</div>
 			) : (
-				<div className="main-container">
-					{classrooms.map((classroom, i) => {
-						if (
-							i === 0 ||
-							classroom.freeHours !== classrooms[i - 1].freeHours
-						) {
-							// create header + element
-							return (
-								<>
-									{createHeader(classroom.freeHours)}
-									{createElement(classroom)}
-								</>
-							);
-						}
+				<>
+					<div className="filters-container">
+						<DatePicker
+							selected={date}
+							onChange={(date: Date) => setDate(date)}
+							locale="it"
+							dateFormat="dd/MM/yyyy"
+							customInput={React.createElement(forwardRef(CustomInput))}
+						/>
+					</div>
+					<div className="main-container">
+						{classrooms.map((classroom, i) => {
+							if (
+								i === 0 ||
+								classroom.freeHours !== classrooms[i - 1].freeHours
+							) {
+								// create header + element
+								return (
+									<>
+										{createHeader(classroom.freeHours)}
+										{createElement(classroom)}
+									</>
+								);
+							}
 
-						// create only element
-						return <>{createElement(classroom)}</>;
-					})}
-				</div>
+							// create only element
+							return <>{createElement(classroom)}</>;
+						})}
+					</div>
+				</>
 			)}
 		</>
 	);
