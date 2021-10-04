@@ -53,6 +53,16 @@ p {
 	color: white;
 }
 
+.date-button {
+	background-color: #3f50b5;
+	padding: 1rem;
+	color: white;
+	font-family: "Be Vietnam Pro", sans-serif;
+	border-radius: 1rem;
+	border: 0;
+	cursor: pointer;
+}
+
 @keyframes loading {
 	from {
 		transform: rotate(0);

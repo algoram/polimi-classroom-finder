@@ -24,7 +24,11 @@ const App = () => {
 		{ value, onClick }: React.HTMLProps<HTMLButtonElement>,
 		ref: React.Ref<HTMLButtonElement>
 	) => {
-		return <button onClick={onClick}>{value}</button>;
+		return (
+			<button className="date-button" onClick={onClick}>
+				{value}
+			</button>
+		);
 	};
 
 	return (
