@@ -1,14 +1,21 @@
-@import url("https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap");
 
 html,
 body {
 	margin: 0;
 	padding: 0;
-	font-family: "Be Vietnam Pro", sans-serif;
+	font-family: "Roboto", sans-serif;
+}
+
+.page {
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
 }
 
 .main-container {
 	padding: 1rem;
+	padding-top: 0;
 
 	display: grid;
 
@@ -37,6 +44,7 @@ p {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
+	text-align: center;
 }
 
 .loading-icon {
@@ -47,20 +55,22 @@ p {
 }
 
 .filters-container {
+	display: inline-flex;
 	box-sizing: border-box;
 	padding: 1rem;
-	background-color: #ab47bc;
 	color: white;
+	gap: 1rem;
+	padding-bottom: 0;
 }
 
-.date-button {
-	background-color: #3f50b5;
-	padding: 1rem;
-	color: white;
-	font-family: "Be Vietnam Pro", sans-serif;
-	border-radius: 1rem;
-	border: 0;
-	cursor: pointer;
+.btn-container {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.spacer {
+	width: 1rem;
 }
 
 @keyframes loading {

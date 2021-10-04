@@ -20,12 +20,14 @@ MIA15 => Via Pascoli 70 (38, 39, 40)
 MIA09 => Viale Romagna (Casa dello Studente)
 
 */
-export const createURL = (d?: Date) => {
+export const createURL = (d?: Date, address?: string) => {
 	let url = "https://polimi-classroom-finder.herokuapp.com/";
 
 	const date = d ?? new Date();
+	const add = address ?? "MIA";
 
 	url += `?date=${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+	url += `&address=${add}`;
 
 	return url;
 };
