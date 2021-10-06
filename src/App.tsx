@@ -157,15 +157,15 @@ const App = () => {
 							) {
 								// create header + element
 								return (
-									<>
+									<React.Fragment key={i}>
 										{createHeader(classroom.freeHours)}
 										{createElement(classroom)}
-									</>
+									</React.Fragment>
 								);
 							}
 
 							// create only element
-							return <>{createElement(classroom)}</>;
+							return createElement(classroom);
 						})}
 					</div>
 				</div>
@@ -176,12 +176,12 @@ const App = () => {
 
 const createElement = (classroom: Classroom) => {
 	return (
-		<div className="classroom">
+		<div className="classroom" key={classroom.classroom}>
 			{classroom.classroom}
 			{classroom.freeHours !== 12 && (
 				<div className="free-hours">
-					{calculateFreeHours(classroom).map((el) => {
-						return <p>{el}</p>;
+					{calculateFreeHours(classroom).map((el, index) => {
+						return <p key={index}>{el}</p>;
 					})}
 				</div>
 			)}
@@ -191,10 +191,10 @@ const createElement = (classroom: Classroom) => {
 
 const createHeader = (hours: number) => {
 	if (hours === 12) {
-		return <h1>Aule libere per tutta la giornata 🎉</h1>;
+		return <h1 key={hours}>Aule libere per tutta la giornata 🎉</h1>;
 	}
 
-	return <h1>Aule libere per {hours} ore</h1>;
+	return <h1 key={hours}>Aule libere per {hours} ore</h1>;
 };
 
 export default App;

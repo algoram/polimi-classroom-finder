@@ -4,6 +4,11 @@ export interface Classroom {
 	freeHours: number;
 }
 
+const backend =
+	process.env.NODE_ENV === "development"
+		? "http://localhost:5000/"
+		: "https://polimi-classroom-finder.herokuapp.com/";
+
 /*
 
 MIA		=> Città Studi
@@ -21,7 +26,7 @@ MIA09 => Viale Romagna (Casa dello Studente)
 
 */
 export const createURL = (d?: Date, address?: string) => {
-	let url = "https://polimi-classroom-finder.herokuapp.com/";
+	let url = backend;
 
 	const date = d ?? new Date();
 	const add = address ?? "MIA";
