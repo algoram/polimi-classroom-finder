@@ -88,3 +88,14 @@ p {
 		grid-column: 2 span;
 	}
 }
+
+@media (prefers-color-scheme: dark) {
+	body {
+		background-color: #2f3136;
+		color: white;
+	}
+
+	.loading-icon {
+		background-color: white;
+	}
+}
