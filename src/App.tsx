@@ -20,7 +20,6 @@ import {
 	Radio,
 	ThemeProvider,
 	createTheme,
-	CssBaseline,
 	useMediaQuery,
 } from "@mui/material";
 import itLocale from "date-fns/locale/it";
