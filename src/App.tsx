@@ -25,6 +25,21 @@ import {
 import itLocale from "date-fns/locale/it";
 import { FilterList } from "@mui/icons-material";
 
+const locations = [
+	{ placeValue: "MIA", placeName: "Città Studi" },
+	{ placeValue: "Piazza Leonardo 26", placeName: "Piazza Leonardo, 26" },
+	{ placeValue: "Piazza Leonardo 32", placeName: "Piazza Leonardo, 32" },
+	{ placeValue: "Via Bassini", placeName: "Via Bassini" },
+	{ placeValue: "Via Bonardi", placeName: "Via Bonardi" },
+	{ placeValue: "Via Colombo 40", placeName: "Via Colombo, 40" },
+	{ placeValue: "Via Colombo 81", placeName: "Via Colombo, 81" },
+	{ placeValue: "Via Golgi 20", placeName: "Via Golgi, 20" },
+	{ placeValue: "Via Golgi 40", placeName: "Via Golgi, 40" },
+	{ placeValue: "Via Mancinelli", placeName: "Via Mancinelli" },
+	{ placeValue: "Via Pascoli 70", placeName: "Via Pascoli, 70" },
+	{ placeValue: "Viale Romagna", placeName: "Viale Romagna" },
+];
+
 const App = () => {
 	const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
 
@@ -51,12 +66,16 @@ const App = () => {
 
 		date === null && setDate(new Date());
 
-		axios.get(createURL(date as Date, address)).then((res) => {
+		axios.get(createURL(date as Date, locations[0].placeValue)).then((res) => {
 			setClassrooms(res.data);
 			console.log(res.data);
 			setLoaded(true);
 		});
-	}, [date, address]);
+	}, [date]);
+
+	useEffect(() => {
+		setDialogOpen(false);
+	}, [address]);
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -88,70 +107,18 @@ const App = () => {
 								<FormControl component="fieldset">
 									<FormLabel component="legend">Sede</FormLabel>
 									<RadioGroup
-										defaultValue={address}
 										name="sede"
-										onChange={(ev, newAddress) => setAddress(newAddress)}
+										onChange={(_, newAddress) => setAddress(newAddress)}
+										value={address}
 									>
-										<FormControlLabel
-											value="MIA"
-											control={<Radio />}
-											label="Città Studi"
-										/>
-										<FormControlLabel
-											value="MIA11"
-											control={<Radio />}
-											label="Piazza Leonardo, 26"
-										/>
-										<FormControlLabel
-											value="MIA01"
-											control={<Radio />}
-											label="Piazza Leonardo, 32"
-										/>
-										<FormControlLabel
-											value="MIA03"
-											control={<Radio />}
-											label="Via Bassini"
-										/>
-										<FormControlLabel
-											value="MIA02"
-											control={<Radio />}
-											label="Via Bonardi"
-										/>
-										<FormControlLabel
-											value="MIA06"
-											control={<Radio />}
-											label="Via Colombo, 40"
-										/>
-										<FormControlLabel
-											value="MIA07"
-											control={<Radio />}
-											label="Via Colombo, 81"
-										/>
-										<FormControlLabel
-											value="MIA14"
-											control={<Radio />}
-											label="Via Golgi, 20"
-										/>
-										<FormControlLabel
-											value="MIA04"
-											control={<Radio />}
-											label="Via Golgi, 40"
-										/>
-										<FormControlLabel
-											value="MIA05"
-											control={<Radio />}
-											label="Via Mancinelli"
-										/>
-										<FormControlLabel
-											value="MIA15"
-											control={<Radio />}
-											label="Via Pascoli, 70"
-										/>
-										<FormControlLabel
-											value="MIA09"
-											control={<Radio />}
-											label="Viale Romagna"
-										/>
+										{locations.map(({ placeValue, placeName }) => (
+											<FormControlLabel
+												key={placeValue}
+												value={placeValue}
+												control={<Radio />}
+												label={placeName}
+											/>
+										))}
 									</RadioGroup>
 								</FormControl>
 							</DialogContent>
@@ -166,23 +133,29 @@ const App = () => {
 				) : (
 					<div>
 						<div className="main-container">
-							{classrooms.map((classroom, i) => {
-								if (
-									i === 0 ||
-									classroom.freeHours !== classrooms[i - 1].freeHours
-								) {
-									// create header + element
-									return (
-										<React.Fragment key={i}>
-											{createHeader(classroom.freeHours)}
-											{createElement(classroom)}
-										</React.Fragment>
-									);
-								}
+							{classrooms
+								.filter(
+									(classroom) =>
+										classroom.location === address ||
+										address === locations[0].placeValue
+								)
+								.map((classroom, i, filteredClassrooms) => {
+									if (
+										i === 0 ||
+										classroom.freeHours !== filteredClassrooms[i - 1].freeHours
+									) {
+										// create header + element
+										return (
+											<React.Fragment key={i}>
+												{createHeader(classroom.freeHours)}
+												{createElement(classroom)}
+											</React.Fragment>
+										);
+									}
 
-								// create only element
-								return createElement(classroom);
-							})}
+									// create only element
+									return createElement(classroom);
+								})}
 						</div>
 					</div>
 				)}

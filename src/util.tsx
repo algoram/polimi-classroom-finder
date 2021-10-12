@@ -2,6 +2,7 @@ export interface Classroom {
 	classroom: string;
 	hours: number[];
 	freeHours: number;
+	location: string;
 }
 
 const backend =
