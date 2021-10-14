@@ -56,8 +56,14 @@ export const calculateFreeHours = (classroom: Classroom) => {
 
 export const locations = [
 	{ placeValue: "MIA", placeName: "Città Studi" },
-	{ placeValue: "Piazza Leonardo 26", placeName: "Piazza Leonardo, 26" },
-	{ placeValue: "Piazza Leonardo 32", placeName: "Piazza Leonardo, 32" },
+	{
+		placeValue: "Piazza Leonardo da Vinci 26",
+		placeName: "Piazza Leonardo, 26",
+	},
+	{
+		placeValue: "Piazza Leonardo da Vinci 32",
+		placeName: "Piazza Leonardo, 32",
+	},
 	{ placeValue: "Via Bassini", placeName: "Via Bassini" },
 	{ placeValue: "Via Bonardi", placeName: "Via Bonardi" },
 	{ placeValue: "Via Colombo 40", placeName: "Via Colombo, 40" },
