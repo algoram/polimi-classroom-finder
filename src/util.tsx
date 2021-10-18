@@ -2,6 +2,7 @@ export interface Classroom {
 	classroom: string;
 	hours: number[];
 	freeHours: number;
+	location: string;
 }
 
 const backend =
@@ -52,3 +53,24 @@ export const calculateFreeHours = (classroom: Classroom) => {
 
 	return freeHours;
 };
+
+export const locations = [
+	{ placeValue: "MIA", placeName: "Città Studi" },
+	{
+		placeValue: "Piazza Leonardo da Vinci 26",
+		placeName: "Piazza Leonardo, 26",
+	},
+	{
+		placeValue: "Piazza Leonardo da Vinci 32",
+		placeName: "Piazza Leonardo, 32",
+	},
+	{ placeValue: "Via Bassini", placeName: "Via Bassini" },
+	{ placeValue: "Via Bonardi", placeName: "Via Bonardi" },
+	{ placeValue: "Via Colombo 40", placeName: "Via Colombo, 40" },
+	{ placeValue: "Via Colombo 81", placeName: "Via Colombo, 81" },
+	{ placeValue: "Via Golgi 20", placeName: "Via Golgi, 20" },
+	{ placeValue: "Via Golgi 40", placeName: "Via Golgi, 40" },
+	{ placeValue: "Via Mancinelli", placeName: "Via Mancinelli" },
+	{ placeValue: "Via Pascoli 70", placeName: "Via Pascoli, 70" },
+	{ placeValue: "Viale Romagna", placeName: "Viale Romagna" },
+];
