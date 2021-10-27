@@ -1,3 +1,4 @@
+import React from "react";
 import { FilterList } from "@mui/icons-material";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";
 import DatePicker from "@mui/lab/DatePicker";
@@ -14,7 +15,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
 import TextField from "@mui/material/TextField";
-import { locations } from "./util";
+import { locations } from "../util";
 import itLocale from "date-fns/locale/it";
 
 interface Props {

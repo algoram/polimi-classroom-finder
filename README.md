@@ -4,10 +4,10 @@ Trova aule libere in base al calendario pubblicato a questo [link](https://www7.
 
 ## ToDo
 
-- [ ] Aggiungere un date picker
-- [ ] Aggiungere dark mode
+- [x] Aggiungere un date picker
+- [x] Aggiungere dark mode
 - [x] Aggiungere schermata caricamento
-- [ ] Aggiungere cache al backend
+- [x] Aggiungere cache al backend
 
 ## Bug
 
