@@ -8,6 +8,7 @@ import "../styles/index.css";
 import { ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
 import FiltersComponent from "../components/Filters";
 import ClassroomList from "../components/ClassroomList";
+import SEO from "../components/seo";
 
 const App = () => {
 	const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
@@ -47,28 +48,31 @@ const App = () => {
 	}, [address]);
 
 	return (
-		<ThemeProvider theme={theme}>
-			<div className="page">
-				<FiltersComponent
-					date={date}
-					setDate={setDate}
-					dialogOpen={dialogOpen}
-					setDialogOpen={setDialogOpen}
-					address={address}
-					setAddress={setAddress}
-				/>
-				{!loaded ? (
-					<div className="loading">
-						<h1>Sto cercando delle aule vuote...</h1>
-						<div className="loading-icon"></div>
-					</div>
-				) : (
-					<div>
-						<ClassroomList classrooms={classrooms} address={address} />
-					</div>
-				)}
-			</div>
-		</ThemeProvider>
+		<>
+			<SEO />
+			<ThemeProvider theme={theme}>
+				<div className="page">
+					<FiltersComponent
+						date={date}
+						setDate={setDate}
+						dialogOpen={dialogOpen}
+						setDialogOpen={setDialogOpen}
+						address={address}
+						setAddress={setAddress}
+					/>
+					{!loaded ? (
+						<div className="loading">
+							<h1>Sto cercando delle aule vuote...</h1>
+							<div className="loading-icon"></div>
+						</div>
+					) : (
+						<div>
+							<ClassroomList classrooms={classrooms} address={address} />
+						</div>
+					)}
+				</div>
+			</ThemeProvider>
+		</>
 	);
 };
 
