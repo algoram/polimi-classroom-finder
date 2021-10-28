@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import { createURL, locations } from "./util";
-import { Classroom } from "./util";
+import { createURL, locations } from "../util";
+import { Classroom } from "../util";
 
-import "./App.css";
+import "../styles/index.css";
 import { ThemeProvider, createTheme, useMediaQuery } from "@mui/material";
-import FiltersComponent from "./Filters";
-import ClassroomList from "./ClassroomList";
+import FiltersComponent from "../components/Filters";
+import ClassroomList from "../components/ClassroomList";
 
 const App = () => {
 	const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");

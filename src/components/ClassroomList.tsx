@@ -1,5 +1,5 @@
 import React from "react";
-import { calculateFreeHours, Classroom, locations } from "./util";
+import { calculateFreeHours, Classroom, locations } from "../util";
 
 interface Props {
 	classrooms: Classroom[];
