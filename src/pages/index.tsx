@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import { createURL, locations } from "../util";
+import { createURL, getDateString, locations } from "../util";
 import { Classroom } from "../util";
 
 import "../styles/index.css";
@@ -36,11 +36,23 @@ const App = () => {
 
 		date === null && setDate(new Date());
 
-		axios.get(createURL(date as Date, locations[0].placeValue)).then((res) => {
-			setClassrooms(res.data);
-			console.log(res.data);
+		const cachedClassrooms: Classroom[] = JSON.parse(
+			localStorage.getItem(getDateString())
+		);
+
+		if (cachedClassrooms !== null) {
+			setClassrooms(cachedClassrooms);
 			setLoaded(true);
-		});
+		} else {
+			axios
+				.get(createURL(date as Date, locations[0].placeValue))
+				.then((res) => {
+					setClassrooms(res.data);
+					console.log(res.data);
+					setLoaded(true);
+					localStorage.setItem(getDateString(), JSON.stringify(res.data));
+				});
+		}
 	}, [date]);
 
 	useEffect(() => {

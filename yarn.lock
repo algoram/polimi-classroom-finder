@@ -1904,10 +1904,14 @@
     "@types/scheduler" "*"
     csstype "^3.0.2"
 
-"@types/react@^15.7.6":
-  version "15.7.6"
-  resolved "https://repo.huaweicloud.com/repository/npm/@types/react/-/react-15.7.6.tgz#b5d8c75fa8c7fae0205dfa4c17a173d2d55af930"
-  integrity sha512-4yVZxPR5+1T1uH1urxsyKqZNTbu9jMIbO8L8BXqUZEMIhilhO3CRwapLxHJp8DGDm7G4tuIyNf9mL6l2LwhL3w==
+"@types/react@^17.0.34":
+  version "17.0.34"
+  resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.34.tgz#797b66d359b692e3f19991b6b07e4b0c706c0102"
+  integrity sha512-46FEGrMjc2+8XhHXILr+3+/sTe3OfzSPU9YGKILLrUYbQ1CLQC9Daqo1KzENGXAWwrFwiY0l4ZbF20gRvgpWTg==
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
 
 "@types/responselike@*", "@types/responselike@^1.0.0":
   version "1.0.0"

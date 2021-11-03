@@ -29,13 +29,19 @@ MIA09 => Viale Romagna (Casa dello Studente)
 export const createURL = (d?: Date, address?: string) => {
 	let url = backend;
 
-	const date = d ?? new Date();
+	const date = getDateString(d);
 	const add = address ?? "MIA";
 
-	url += `?date=${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
+	url += `?date=${date}`;
 	url += `&address=${add}`;
 
 	return url;
+};
+
+export const getDateString = (d?: Date) => {
+	const date = d ?? new Date();
+
+	return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
 };
 
 export const calculateFreeHours = (classroom: Classroom) => {
