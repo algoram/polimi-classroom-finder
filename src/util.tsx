@@ -5,6 +5,60 @@ export interface Classroom {
 	location: string;
 }
 
+export class LocalStorageFile {
+	expire: number;
+	classrooms: Classroom[];
+	version: string;
+
+	static readonly actualVersion = "0";
+	static readonly timeToExpire = 3 * 60 * 60 * 1000;
+
+	static fromCache(value: string) {
+		const newLocalStorage = new LocalStorageFile();
+		const parsed = JSON.parse(value);
+
+		newLocalStorage.expire = parsed.expire;
+		newLocalStorage.classrooms = parsed.classrooms;
+		newLocalStorage.version = parsed.version;
+
+		return newLocalStorage;
+	}
+
+	static fromServer(classroms: Classroom[]) {
+		const newLocalStorage = new LocalStorageFile();
+
+		newLocalStorage.classrooms = classroms;
+		newLocalStorage.version = this.actualVersion;
+		newLocalStorage.expire = Date.now() + this.timeToExpire;
+
+		return newLocalStorage;
+	}
+
+	private constructor() {}
+
+	checkValidity() {
+		console.log(
+			"checkValidity",
+			this.version,
+			LocalStorageFile.actualVersion,
+			this.version !== LocalStorageFile.actualVersion
+		);
+
+		if (
+			typeof this.expire === "undefined" ||
+			this.expire > Date.now() + LocalStorageFile.timeToExpire ||
+			this.version !== LocalStorageFile.actualVersion ||
+			typeof this.classrooms !== "object"
+		) {
+			console.log("wtf");
+
+			return false;
+		}
+
+		return true;
+	}
+}
+
 const backend =
 	process.env.NODE_ENV === "development"
 		? "http://localhost:5000/"

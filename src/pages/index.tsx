@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-import { createURL, getDateString, locations, rankClassrooms } from "../util";
+import {
+	createURL,
+	getDateString,
+	LocalStorageFile,
+	locations,
+	rankClassrooms,
+} from "../util";
 import { Classroom } from "../util";
 
 import "../styles/index.css";
@@ -23,35 +29,53 @@ const App = () => {
 		[prefersDarkMode]
 	);
 
-	const [classrooms, setClassrooms] = useState(Array<Classroom>());
+	const [cachedClassromData, setCachedClassromData] =
+		useState<LocalStorageFile>();
+	const classrooms = rankClassrooms(cachedClassromData?.classrooms ?? []);
 	const [date, setDate] = useState<Date | null>(new Date());
 	const [dialogOpen, setDialogOpen] = useState(false);
 	const [address, setAddress] = useState("MIA");
 	const [loaded, setLoaded] = useState(false);
 
+	console.log(cachedClassromData);
+
 	useEffect(() => {
-		setClassrooms([]);
 		setDialogOpen(false);
 		setLoaded(false);
-
 		date === null && setDate(new Date());
-
-		const cachedClassrooms: Classroom[] = JSON.parse(
-			localStorage.getItem(getDateString())
-		);
-
-		if (cachedClassrooms !== null) {
-			setClassrooms(rankClassrooms(cachedClassrooms));
-			setLoaded(true);
-		} else {
+		const update = () => {
 			axios
 				.get(createURL(date as Date, locations[0].placeValue))
 				.then((res) => {
-					setClassrooms(rankClassrooms(res.data));
+					const tempCachedClassroom = LocalStorageFile.fromServer(res.data);
 					console.log(res.data);
 					setLoaded(true);
-					localStorage.setItem(getDateString(), JSON.stringify(res.data));
+					localStorage.setItem(
+						getDateString(),
+						JSON.stringify(tempCachedClassroom)
+					);
+
+					setCachedClassromData(tempCachedClassroom);
 				});
+		};
+
+		const tempString = localStorage.getItem(getDateString());
+
+		if (tempString) {
+			const tempCached = LocalStorageFile.fromCache(tempString);
+			setCachedClassromData(tempCached);
+
+			if (tempCached.checkValidity()) {
+				setLoaded(true);
+
+				(async () => update())();
+			} else {
+				console.log("usato dato dal server");
+				update();
+			}
+		} else {
+			console.log("usato dato dal server");
+			update();
 		}
 	}, [date]);
 
