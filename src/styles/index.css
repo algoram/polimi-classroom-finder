@@ -103,3 +103,15 @@ p {
     background-color: white;
   }
 }
+
+.free {
+  color: #388E3C;
+}
+
+.soon-free {
+  color: #FFCA28;
+}
+
+.busy {
+  color: #B71C1C;
+}

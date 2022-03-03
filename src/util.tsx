@@ -179,19 +179,19 @@ export const formatTime = (minutes: number) => {
   const min = minutes % 60;
 
   if (hour == 1 && min == 0) {
-    return "un'ora";
+    return "un'altra ora";
   } else if (hour >= 1) {
     if (min >= 10) {
-      return `${hour}:${min} ore`;
+      return `altre ${hour}:${min} ore`;
     } else if (min != 0) {
-      return `${hour}:0${min} ore`;
+      return `altre ${hour}:0${min} ore`;
     } else {
-      return `${hour} ore`;
+      return `altre ${hour} ore`;
     }
   } else if (min > 1) {
-    return `${min} minuti`;
+    return `altri ${min} minuti`;
   } else {
-    return 'un minuto';
+    return 'un altro minuto';
   }
 };
 

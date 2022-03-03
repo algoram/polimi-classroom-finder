@@ -82,8 +82,18 @@ const ClassroomList = (props: Props) => {
 };
 
 const createElement = (c: RankedClassroom, hourOfDay: Date) => {
+  let colorClass: string;
+
+  if (c.busyMin === 0) {
+    colorClass = 'free';
+  } else if (c.busyMin <= 30) {
+    colorClass = 'soon-free';
+  } else {
+    colorClass = 'busy';
+  }
+
   return (
-    <div className="classroom" key={c.classroom.classroom}>
+    <div className={'classroom ' + colorClass} key={c.classroom.classroom}>
       <b>{c.classroom.classroom}</b>
       {c.busyMin === 0 ? ' libera' : ' occupata'} per{' '}
       {c.busyMin === 0 ? formatTime(c.freeMin) : formatTime(c.busyMin)}
